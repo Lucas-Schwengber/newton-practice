@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Callable
 
 def derivative(f, eps=1e-6):
     """
@@ -35,7 +35,7 @@ def second_derivative(f, eps=1e-6):
     return f_double_prime
 
 
-def optimize(f, x0=0, max_iter=100, eps=1e-6):
+def optimize(f:Callable, x0:float=0, max_iter:int=100, eps:float=1e-6):
     """
     Runs newton's method to find local minima (or maxima) of a given real function f.
 
@@ -45,7 +45,7 @@ def optimize(f, x0=0, max_iter=100, eps=1e-6):
     -max_iter: maximum number of iterations to run the algorithm
     -eps: finite difference approximation step size
     """
-    tol = 1e-6
+    tol = 1e-8
 
     f_prime = derivative(f, eps)
     f_double_prime = second_derivative(f, eps)
@@ -71,5 +71,5 @@ def optimize(f, x0=0, max_iter=100, eps=1e-6):
 
 
 if __name__ == "__main__":
-    x = optimize(np.sin, x0=1)
-    print(x)
+    x = optimize(lambda x: x**3/3 - 2*x + 1, x0=1)
+    print(x-np.sqrt(2))
