@@ -38,7 +38,5 @@ def optimize(f, x0=0, n_iter=100, tol=1e-6):
 
 
 if __name__ == "__main__":
-    f = lambda x: np.sin(x)
-
-    x = optimize(f, x0=1)
+    x = optimize(np.sin, x0=1)
     print(x)
