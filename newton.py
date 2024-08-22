@@ -18,8 +18,8 @@ def optimize(f, x0=0, n_iter=100, tol=1e-6):
     x = x0
 
     for i in range(0,n_iter):
-        if np.abs(f_prime(x)) < tol:
-            print("Gradient norm below tolerance, stopping early.")
+        if np.abs(f_double_prime(x)) < tol:
+            print("Hessian norm below tolerance, stopping early.")
             break
         
         if  np.abs(f_prime(x)/f_double_prime(x)) < tol:
