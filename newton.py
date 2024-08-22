@@ -28,7 +28,7 @@ def optimize(f, x0=0, n_iter=100, tol=1e-6):
         print(f"Iteration {i} approximation: {x}") 
     return x
 
-if __name__ == "main":
+if __name__ == "__main__":
     f = lambda x: np.sin(x)
 
     x = optimize(f, x0=1)
