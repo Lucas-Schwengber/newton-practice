@@ -2,7 +2,7 @@ import numpy as np
 from typing import Callable
 import warnings
 
-def derivative(f, eps=1e-7):
+def derivative(f, eps=22*1e-7):
     """ 
     Evaluates the derivative of a function (as a function) using finite differences.
 
