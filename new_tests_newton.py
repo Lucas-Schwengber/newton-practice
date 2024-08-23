@@ -18,7 +18,7 @@ def test_zero_second_derivative():
         newton.optimize(f,0.1)
 
 def test_max():
-    with pytest.warns(UserWarning, match="Probably counverged to a max"):
+    with pytest.warns(UserWarning, match="Probably counverged to a max."):
         f = lambda x: -x**2
         newton.optimize(f,0.1)
 
@@ -33,11 +33,11 @@ def test_f_exists():
         newton.optimize(der_abs,0)
 
 def test_conv_inf():
-    with pytest.raises(RuntimeError):
+    with pytest.warns(UserWarning, match="Method seems to be diverging, stopping early."):
         def f(x):
             if x == 0:
-                raise ValueError("Function cannot be evaluated at point")
+                raise ValueError("Function cannot be evaluated at point.")
             else:
-                return 0.5/x
+                return 1/x
 
         newton.optimize(f, 0.2)

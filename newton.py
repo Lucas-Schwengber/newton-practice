@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Callable
+import warnings
 
 def derivative(f, eps=1e-6):
     """
@@ -50,22 +51,32 @@ def optimize(f:Callable, x0:float=0, max_iter:int=100, eps:float=1e-6):
     f_prime = derivative(f, eps)
     f_double_prime = second_derivative(f, eps)
     x = x0
+    step = 0
+    new_step = 0
 
     for i in range(0, max_iter):
         if np.abs(f_double_prime(x)) < tol:
-            print("Hessian norm below tolerance, stopping early.")
+            warnings.warn("Hessian norm below tolerance, stopping early.", UserWarning)
             break
 
-        if np.abs(f_prime(x) / f_double_prime(x)) < tol:
+        step = f_prime(x) / f_double_prime(x)
+
+        if np.abs(step) < tol:
             print("Stopping criteria reached.")
             break
-
         else:
-            x = x - f_prime(x) / f_double_prime(x)
-            if i == max_iter - 1:
-                print("Maximum number of iterations reached")
+            x = x - step
+            new_step = f_prime(x) / f_double_prime(x)
 
+        if i == max_iter - 1:
+            warnings.warn("Maximum number of iterations reached.", UserWarning)
+        elif new_step > 10*step:
+            warnings.warn("Method seems to be diverging, stopping early.", UserWarning)
+            break        
         print(f"Iteration {i} approximation: {x}")
+
+    if f_double_prime(x) < 0:
+        warnings.warn("Probably counverged to a max.")
 
     return x
 
